@@ -1,32 +1,67 @@
-Project Title: Word Frequency Microservice
+Word Frequency Microservice
 
-Description: This is a microservice built in Python that takes a URL of a static website as an input and identifies all the unique words and their frequency of occurrence on the web page. The output is a JSON object that lists each unique word and its frequency of occurrence.
+Description
 
-How to Install and Run the Project:
+This microservice takes a URL of a static website as input and identifies all the unique words and how many times they occur on the web page. The output is a list of words in JSON format along with the frequency of occurrence (number of times the word is repeated).
 
-Clone the project from the GitHub repository:
+How to Install and Run
 
-bash
-Copy code
-git clone https://github.com/<username>/<repository>.git
-Install the required dependencies by running the following command in the project directory:
+Clone the repository:
 
-Copy code
+git clone https://github.com/Mnani1310/Assignment.git
+
+Install the dependencies by running the following command in the project directory:
+
+
 pip install -r requirements.txt
-Run the microservice by executing the following command in the project directory:
 
-Copy code
+Start the microservice by running the following command:
+
+
 python app.py
-The microservice should be up and running on localhost:5000
 
-Examples of How to Use the Project:
+This will start the microservice on http://localhost:5000.
 
-Open a web browser and navigate to http://localhost:5000
-Enter a URL of a static website in the input field and submit the form.
-The microservice will process the URL and return a JSON object that lists each unique word and its frequency of occurrence on the web page.
-List of Dependencies:
 
-Flask==2.0.2
-requests==2.26.0
+To use the microservice, make a POST request to 
+
+http://localhost:5000/word_frequency with a JSON payload that contains the URL of the website you want to analyze:
+
+json
+{
+    "url": "https://www.example.com"
+}
+
+The microservice will respond with a JSON object that contains the frequency of each unique word on the webpage:
+
+json
+{
+    "the": 10,
+    "quick": 5,
+    "brown": 5,
+    ...
+}
+
+Examples of Usage
+Here is an example of how to use the microservice with Python:
+
+go
+import requests
+
+url = 'http://localhost:5000/word_frequency'
+payload = {'url': 'https://www.example.com'}
+
+response = requests.post(url, json=payload)
+
+if response.status_code == 200:
+    print(response.json())
+else:
+    print('Error:', response.status_code)
+    
+List of Dependencies
+Flask==2.1.1
 beautifulsoup4==4.10.0
-License: This project is licensed under the MIT License.
+requests==2.26.0
+
+License Information
+This project is licensed under the MIT License. See the LICENSE file for more information.

@@ -1,0 +1,37 @@
+from flask import Flask, request, jsonify
+from bs4 import BeautifulSoup
+import requests
+import json
+app = Flask(__name__)
+@app.route('/word_frequency', methods=['GET'])
+def word_frequency():
+    # Get the URL from the request
+    url = request.args.get('url')
+
+    # Fetch the webpage content
+    page = requests.get(url)
+
+    # Parse the HTML content using BeautifulSoup
+    soup = BeautifulSoup(page.content, 'html.parser')
+
+    # Extract the text content from the page
+    text = soup.get_text()
+
+    # Split the text into individual words
+    words = text.split()
+
+    # Create a dictionary to store the word frequency counts
+    word_counts = {}
+
+    # Iterate over each word and update the dictionary with the frequency count
+    for word in words:
+        if word in word_counts:
+            word_counts[word] += 1
+        else:
+            word_counts[word] = 1
+
+    # Convert the dictionary to a JSON object and return it
+    return jsonify(word_counts)
+
+if __name__ == '__main__':
+    app.run(debug=True)
